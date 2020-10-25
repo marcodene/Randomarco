@@ -10,11 +10,13 @@ length = len(students)
 #Function to pick a random student and remove it from the student list
 def random_picker():
     global length
-    
+
     if length != 0 :
         # pick a random number from 0 to the length of the student list
         num = random.randint(0, length-1)
+
         print('num: ' + str(num))
+
         # set the lbl_result text to the random student picked
         lbl_result["text"] = str(students[num])
 
@@ -22,8 +24,11 @@ def random_picker():
         students.pop(num)
         #refresh the students length
         length = len(students)
+        
         print('students left: ' + str(length))
+        
     else:
+        #if the students are finished then display that there are no more students available
         lbl_result["text"] = 'There are no more students'
     
 
