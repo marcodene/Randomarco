@@ -7,10 +7,19 @@ students = ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De 
 #length of the students list
 length = len(students)
 
+
+prev_txt = ''
+
 #Function to pick a random student and remove it from the student list
 def random_picker():
     global length
     global input_field
+    global prev_txt
+
+
+    #Clean the lbl_result
+    lbl_result["text"] = ''
+    prev_txt = ''
 
     if length != 0 :
         #it gets from the input_field how many student to pick up
@@ -24,21 +33,36 @@ def random_picker():
         elif n_to_repeat.isdigit() == False:
             lbl_result["text"] = "You haven't entered a number.\nPlease enter a number."
 
+        # if the string of the input is a too high than ask to enter a minor number
+        elif int(n_to_repeat) > length - 1:
+            lbl_result["text"] = "There aren't enough students in the class.\nPlease enter a minor number."
+           
+
         else:
-            # pick a random number from 0 to the length of the student list
-            num = random.randint(0, length-1)
 
-            print('num: ' + str(num))
+            for i in range(int(n_to_repeat)):
+                # pick a random number from 0 to the length of the student list
+                num = random.randint(0, length-1)
 
-            # set the lbl_result text to the random student picked
-            lbl_result["text"] = str(students[num])
+                print('num: ' + str(num))
+                
+                # set the lbl_result text to the random student picked
+                if prev_txt == '':
+                    lbl_result["text"] = str(students[num])
+                else:
+                    lbl_result["text"] = f'{prev_txt}, {str(students[num])}'
 
-            #remove the index of the student picked from the list
-            students.pop(num)
-            #refresh the students length
-            length = len(students)
-            
-            print('students left: ' + str(length))
+                prev_txt = lbl_result["text"]
+                
+
+                #remove the index of the student picked from the list
+                students.pop(num)
+                #refresh the students length
+                length = len(students)
+                
+                print('students left: ' + str(length))
+
+            lbl_stud_left["text"] = f'There are {length} students left.'
         
     else:
         #if the students are finished then display that there are no more students available
@@ -54,6 +78,9 @@ lbl_num_to_pick = tk.Label(text = 'How many students do you wanna pick?')
 #input field where you can set how many students you want to be picked
 input_field = tk.Entry()
 
+#lbl say the num of students left
+lbl_stud_left = tk.Label(text = f'There are {length} students left.')
+
 # btn widget => when clicked it gets a random student
 btn_picker = tk.Button(text="Pick", command=random_picker)
 
@@ -63,6 +90,7 @@ lbl_result = tk.Label()
 # Display the btn and the lbl
 lbl_num_to_pick.pack()
 input_field.pack()
+lbl_stud_left.pack()
 btn_picker.pack()
 lbl_result.pack()
 
