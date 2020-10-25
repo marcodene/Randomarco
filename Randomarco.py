@@ -5,8 +5,12 @@ students = ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De 
 
 
 def random_picker():
+    # pick a random number from 0 to the length of the student list
     num = random.randint(0, len(students)-1)
+    # set the lbl_result text to the random student picked
     lbl_result["text"] = str(students[num])
+
+
 
 window = tk.Tk()
 
