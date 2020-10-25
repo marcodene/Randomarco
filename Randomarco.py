@@ -45,6 +45,7 @@ def random_picker():
 
             #This runs if the user has already insert an available number, but it is higher than the students left
             if int(n_to_repeat) > length - 1:
+                #it display just the students left
                 for i in range (length):
                     if prev_txt == '':
                         txt = students[i]
@@ -90,12 +91,14 @@ def random_picker():
 
 window = tk.Tk()
 window.title('RANDOMARCO')
+window.minsize(300, 100)
 
 #lbl ask how many student must be picked
 lbl_num_to_pick = tk.Label(text = 'How many students do you wanna pick?')
 
 #input field where you can set how many students you want to be picked
 input_field = tk.Entry()
+input_field.insert(0, 'Insert a number:')
 
 #lbl say the num of students left
 lbl_stud_left = tk.Label(text = f'There are {length} students left.')
