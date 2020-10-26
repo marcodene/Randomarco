@@ -1,7 +1,8 @@
 import random
 import tkinter as tk
 
-default = ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De Negri', 'Du', 'Dubini', 'Gandolfi', 'Grimaldi', 'Licciardi', 'Maggiore', 'Mazzotti', 'Micara', 'Mihindukulasuria', 'Monteduro', 'Orlando', 'Piana', 'Ruiz', 'Stella', 'Tettamanti', 'Zola']
+def default() :
+    return ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De Negri', 'Du', 'Dubini', 'Gandolfi', 'Grimaldi', 'Licciardi', 'Maggiore', 'Mazzotti', 'Micara', 'Mihindukulasuria', 'Monteduro', 'Orlando', 'Piana', 'Ruiz', 'Stella', 'Tettamanti', 'Zola']
 
 #list of all the students
 students = ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De Negri', 'Du', 'Dubini', 'Gandolfi', 'Grimaldi', 'Licciardi', 'Maggiore', 'Mazzotti', 'Micara', 'Mihindukulasuria', 'Monteduro', 'Orlando', 'Piana', 'Ruiz', 'Stella', 'Tettamanti', 'Zola']
@@ -134,7 +135,7 @@ def undo():
 
         for i in stud_to_add:
             #Check if the stud_to_add is inside the default array. This is made to prevent that you add "You can't undo anymore." or whatever is diplayed in the lbl_result
-            if i in default:
+            if i in default():
                 students.append(i)
                 print(i)
             else:
@@ -156,11 +157,12 @@ def undo():
 
 
 def reset():
-    global default
+    #global default
     global students
     global length
 
-    students = default
+    students = default()
+    print(default())
     
     length = len(students)
 
