@@ -1,15 +1,25 @@
 import random
 import tkinter as tk
 
+default = ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De Negri', 'Du', 'Dubini', 'Gandolfi', 'Grimaldi', 'Licciardi', 'Maggiore', 'Mazzotti', 'Micara', 'Mihindukulasuria', 'Monteduro', 'Orlando', 'Piana', 'Ruiz', 'Stella', 'Tettamanti', 'Zola']
+
 #list of all the students
 students = ['Abbotto', 'Anglieri', 'Briola', 'Budeanu', 'Cattai', 'Celant', 'De Negri', 'Du', 'Dubini', 'Gandolfi', 'Grimaldi', 'Licciardi', 'Maggiore', 'Mazzotti', 'Micara', 'Mihindukulasuria', 'Monteduro', 'Orlando', 'Piana', 'Ruiz', 'Stella', 'Tettamanti', 'Zola']
-
 #length of the students list
 length = len(students)
 
+prev_stud = []
+prev_stud_picked = ''
+
 proced = False
 
+first_time = True
+
+undo_one_time = False
+
 prev_txt = ''
+
+curr_studs = ''
 
 #Function to pick a random student and remove it from the student list
 def random_picker():
@@ -17,7 +27,17 @@ def random_picker():
     global input_field
     global prev_txt
     global proced
+    global prev_stud_picked
+    global first_time
+    global undo_one_time
+    global curr_studs
 
+    #You can't undo two times in a row
+    undo_one_time = False
+
+    #save the students picked in a var
+    prev_stud_picked = lbl_result["text"]
+    print('stud_picked: ' + prev_stud_picked)
 
     #Clean the lbl_result
     lbl_result["text"] = ''
@@ -51,7 +71,6 @@ def random_picker():
                         txt = students[i]
                     else:
                         txt = f'{prev_txt}, {students[i]}'
-                    print(txt)
 
                     prev_txt = txt
 
@@ -62,7 +81,7 @@ def random_picker():
                     # pick a random number from 0 to the length of the student list
                     num = random.randint(0, length-1)
 
-                    print('num: ' + str(num))
+                    '''print('num: ' + str(num))'''
                     
                     # set the lbl_result text to the random student picked
                     if prev_txt == '':
@@ -78,15 +97,75 @@ def random_picker():
                     #refresh the students length
                     length = len(students)
                     
-                    print('students left: ' + str(length))
+                    '''print('students left: ' + str(length))'''
+
+                curr_studs = lbl_result["text"]
+                print(curr_studs)
 
             lbl_stud_left["text"] = f'There are {length} students left.'
+
+            if first_time == True:
+                prev_stud_picked = lbl_result["text"]
+                print('stud_picked: ' + prev_stud_picked)
+
+                first_time = False
+
         
     else:
         #if the students are finished then display that there are no more students available
         lbl_result["text"] = 'There are no more students'
     
 
+def undo():
+    global prev_stud
+    global prev_stud_picked
+    global length
+    global students
+    global undo_one_time
+    global curr_studs
+
+    print('curr_studs: ' + curr_studs)
+
+    if undo_one_time:
+        lbl_result["text"] = "You can't undo anymore."
+    else:
+        stud_to_add = curr_studs.split(", ")
+        print(stud_to_add)
+
+        for i in stud_to_add:
+            #Check if the stud_to_add is inside the default array. This is made to prevent that you add "You can't undo anymore." or whatever is diplayed in the lbl_result
+            if i in default:
+                students.append(i)
+                print(i)
+            else:
+                print('testa di cazzo')
+            
+            
+        print(students)
+        length = len(students)
+        
+        
+        print('length: ' + str(length))
+
+        lbl_stud_left["text"] = f'There are {length} students left.'
+        lbl_result["text"] = prev_stud_picked
+
+    #You can't undo two times in a row
+    undo_one_time = True
+
+
+
+def reset():
+    global default
+    global students
+    global length
+
+    students = default
+    
+    length = len(students)
+
+    lbl_stud_left["text"] = f'There are {length} students left.'
+    lbl_result["text"] = ""
 
 
 window = tk.Tk()
@@ -109,12 +188,20 @@ btn_picker = tk.Button(text="Pick", command=random_picker)
 # lbl to display the random student picked
 lbl_result = tk.Label()
 
+#Undo btn
+btn_undo = tk.Button(text="Undo", command=undo)
+
+#Reset btn
+btn_reset = tk.Button(text="Reset", command=reset)
+
 # Display the btn and the lbl
 lbl_num_to_pick.pack()
 input_field.pack()
 lbl_stud_left.pack()
 btn_picker.pack()
 lbl_result.pack()
+btn_undo.pack(side=tk.LEFT, padx= 10, pady = 5)
+btn_reset.pack(side=tk.RIGHT, padx= 10, pady = 5)
 
 #Display the window
 window.mainloop()
