@@ -38,7 +38,6 @@ def random_picker():
 
     #save the students picked in a var
     prev_stud_picked = lbl_result["text"]
-    print('stud_picked: ' + prev_stud_picked)
 
     #Clean the lbl_result
     lbl_result["text"] = ''
@@ -82,7 +81,6 @@ def random_picker():
                     # pick a random number from 0 to the length of the student list
                     num = random.randint(0, length-1)
 
-                    '''print('num: ' + str(num))'''
                     
                     # set the lbl_result text to the random student picked
                     if prev_txt == '':
@@ -98,16 +96,13 @@ def random_picker():
                     #refresh the students length
                     length = len(students)
                     
-                    '''print('students left: ' + str(length))'''
 
                 curr_studs = lbl_result["text"]
-                print(curr_studs)
 
             lbl_stud_left["text"] = f'There are {length} students left.'
 
             if first_time == True:
                 prev_stud_picked = lbl_result["text"]
-                print('stud_picked: ' + prev_stud_picked)
 
                 first_time = False
 
@@ -125,28 +120,23 @@ def undo():
     global undo_one_time
     global curr_studs
 
-    print('curr_studs: ' + curr_studs)
 
     if undo_one_time:
         lbl_result["text"] = "You can't undo anymore."
     else:
         stud_to_add = curr_studs.split(", ")
-        print(stud_to_add)
 
         for i in stud_to_add:
             #Check if the stud_to_add is inside the default array. This is made to prevent that you add "You can't undo anymore." or whatever is diplayed in the lbl_result
             if i in default():
                 students.append(i)
-                print(i)
             else:
-                print('testa di cazzo')
+                pass
             
             
-        print(students)
         length = len(students)
         
         
-        print('length: ' + str(length))
 
         lbl_stud_left["text"] = f'There are {length} students left.'
         lbl_result["text"] = prev_stud_picked
@@ -162,7 +152,6 @@ def reset():
     global length
 
     students = default()
-    print(default())
     
     length = len(students)
 
